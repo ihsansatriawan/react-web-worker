@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import ReactCountdownClock from "react-countdown-clock";
-// import worker from "./worker.js";
-// import WebWorker from "./workerSetup";
+import worker from "./worker.js";
+import WebWorker from "./workerSetup";
 import "./App.css";
 
 class Home extends Component {
@@ -34,19 +34,20 @@ class Home extends Component {
     });
   };
 
-  // fetchWebWorker = () => {
-  //   this.worker.postMessage("Fetch Users");
+  fetchWebWorker = () => {
+    this.worker.postMessage("Fetch Users Ihsa");
 
-  //   this.worker.addEventListener("message", event => {
-  //     this.setState({
-  //       count: event.data.length
-  //     });
-  //   });
-  // };
+    this.worker.addEventListener("message", event => {
+      console.log("event: ", event)
+      this.setState({
+        count: event.data.length
+      });
+    });
+  };
 
-  // componentDidMount = () => {
-  //   this.worker = new WebWorker(worker);
-  // };
+  componentDidMount = () => {
+    this.worker = new WebWorker(worker);
+  };
 
   render() {
     return (
@@ -72,7 +73,7 @@ class Home extends Component {
             size={300}
           />
           <p className="text-center">Total User Count: {this.state.count}</p>
-          <button className="btn-worker" onClick={this.fetchUsers}>
+          <button className="btn-worker" onClick={this.fetchWebWorker}>
             Fetch Users with Web Worker
           </button>
         </section>
