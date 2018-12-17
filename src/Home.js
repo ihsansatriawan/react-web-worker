@@ -13,6 +13,10 @@ class Home extends Component {
     };
   }
 
+  resetCounter = () => {
+    this.setState({ count: 0 })
+  }
+
   fetchUsers = () => {
     const users = [];
 
@@ -29,8 +33,10 @@ class Home extends Component {
       users.push(userDetails);
     }
 
-    this.setState({
-      count: users.length
+    this.setState(prevState => {
+      return {
+        count: prevState.count + users.length
+      }
     });
   };
 
@@ -38,9 +44,10 @@ class Home extends Component {
     this.worker.postMessage("Fetch Users Ihsa");
 
     this.worker.addEventListener("message", event => {
-      console.log("event: ", event)
-      this.setState({
-        count: event.data.length
+      this.setState(prevState => {
+        return {
+          count: prevState.count + event.data.length
+        }
       });
     });
   };
@@ -62,6 +69,9 @@ class Home extends Component {
           <p className="text-center">Total User Count: {this.state.count}</p>
           <button className="btn-direct" onClick={this.fetchUsers}>
             Fetch Users Directly
+          </button>
+          <button className="btn-direct" onClick={this.resetCounter}>
+            Reset Counter
           </button>
         </section>
 
